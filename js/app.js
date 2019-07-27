@@ -25,6 +25,55 @@ function shuffle(array) {
     return array;
 }
 
+function respondToClick(event) {
+    if (click.length < 2) {
+        if (event.target.tagName == 'LI') {
+            event.target.classList.add("open");
+            event.target.classList.add("show");
+            // click.push(event.target);
+            if (!click.includes(event.target)) {
+                click.push(event.target)
+            }
+            compare();
+        }
+    }
+}
+
+function compare() {
+    if (click.length > 1) {
+        let first = click[0].firstElementChild.classList[1];
+        let second = click[1].firstElementChild.classList[1];
+        if (first == second) {
+            click[0].classList.add("match");
+            click[1].classList.add("match");
+        }
+        setTimeout(function () {
+            click[0].classList.remove('open');
+            click[0].classList.remove('show');
+            click[1].classList.remove('open');
+            click[1].classList.remove('show');
+            click = [];
+        }, 1000);
+    }
+
+}
+
+let click = [];
+const container = document.getElementsByClassName("deck")[0];
+let items = container.children;
+for (item of items) {
+    item.classList.remove('open', 'show', 'match');
+}
+
+
+container.addEventListener('click', respondToClick);
+
+
+
+
+
+
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
