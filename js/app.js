@@ -11,6 +11,7 @@
  */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
+
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -56,6 +57,8 @@ function cardsMatch(first, second) {
     if (first == second) {
         openCards[0].classList.add("match");
         openCards[1].classList.add("match");
+        cardsMatchCounter += 1;
+        winGame();
     }
 
 }
@@ -75,15 +78,19 @@ function inMoveCounter() {
     moveCounter.innerText = counter;
 }
 
-function resetValues() {
-    openCards = [];
-    counter = 0;
-    moveCounter.innerText = counter;
-    for (item of items) {
-        item.classList.remove('open', 'show', 'match');
+function winGame() {
+    if (cardsMatchCounter == 8) {
+        alert("You won the game.");
     }
 }
 
+function shuffleCards(shuffle) {
+    let index = 0;
+    for (item of items) {
+        item.children[0].className = `fa fa-${shuffle[index]}`;
+        index += 1;
+    }
+}
 
 function game() {
     const resetButton = document.getElementsByClassName('restart')[0];
@@ -91,16 +98,31 @@ function game() {
     resetButton.addEventListener('click', resetValues);
 }
 
+function resetValues() {
+    shuffleCardClasses = shuffle(cardClasses.concat(cardClasses));
+    shuffleCards(shuffleCardClasses);
+    openCards = [];
+    cardsMatchCounter = 0;
+    counter = 0;
+    moveCounter.innerText = counter;
+    for (item of items) {
+        item.classList.remove('open', 'show', 'match');
+    }
+
+}
 
 let openCards = [];
 let counter = 0;
+let cardsMatchCounter = 0;
 const container = document.getElementsByClassName("deck")[0];
 const moveCounter = document.getElementsByClassName('moves')[0];
 let items = container.children;
+let cardClasses = ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf', 'bicycle', 'bomb'];
+let shuffleCardClasses = [];
+// let shuffleCardClasses = shuffle(cardClasses.concat(cardClasses));
 
 resetValues();
 game();
-
 
 /*
  * set up the event listener for a card. If a card is openCardsed:Function 0(game())
@@ -116,5 +138,5 @@ game();
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *      Function 5(moveCounter)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- *      Function 6
+ *      Function 6(winGame)
  */
