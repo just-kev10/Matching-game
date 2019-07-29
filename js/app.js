@@ -28,39 +28,34 @@ function shuffle(array) {
 
 function respondToClick(event) {
     openCard(event.target);
-    compareCards();
 }
 
 
 function openCard(eTarget) {
-    if (openCards.length < 2 && !openCards.includes(eTarget)) {
+    if (openCards.length < 2 && !openCards.includes(eTarget) && !matchCards.includes(eTarget)) {
         if (eTarget.tagName == 'LI') {
             eTarget.classList.add("open");
             eTarget.classList.add("show");
-            openCards.push(eTarget)
+            openCards.push(eTarget);
         }
+        compareCards();
     }
 }
 
 function compareCards() {
-    if (openCards.length > 1) {
-        let first = openCards[0].firstElementChild.classList[1];
-        let second = openCards[1].firstElementChild.classList[1];
-        cardsMatch(first, second);
-        noCardsMatch();
-        inMoveCounter();
+    if (openCards.length == 2) {
+        cardsMatch(openCards[0], openCards[1]);
     }
 
 }
 
 function cardsMatch(first, second) {
-    if (first == second) {
-        openCards[0].classList.add("match");
-        openCards[1].classList.add("match");
-        cardsMatchCounter += 1;
-        winGame();
+    if (first.firstElementChild.classList[1] == second.firstElementChild.classList[1]) {
+        matchCards.push(first, second);
+        first.classList.add("match");
+        second.classList.add("match");
     }
-
+    noCardsMatch();
 }
 
 function noCardsMatch() {
@@ -70,17 +65,21 @@ function noCardsMatch() {
         }
         openCards = [];
     }, 1000);
-
+    inMoveCounter();
 }
 
 function inMoveCounter() {
     counter += 1;
     moveCounter.innerText = counter;
+    winGame();
 }
 
 function winGame() {
-    if (cardsMatchCounter == 8) {
-        alert("You won the game.");
+    if (matchCards.length == 16) {
+        setTimeout(function () {
+            alert("You won the game.");
+        }, 1000);
+
     }
 }
 
@@ -102,7 +101,7 @@ function resetValues() {
     shuffleCardClasses = shuffle(cardClasses.concat(cardClasses));
     shuffleCards(shuffleCardClasses);
     openCards = [];
-    cardsMatchCounter = 0;
+    matchCards = [];
     counter = 0;
     moveCounter.innerText = counter;
     for (item of items) {
@@ -112,8 +111,8 @@ function resetValues() {
 }
 
 let openCards = [];
+let matchCards = [];
 let counter = 0;
-let cardsMatchCounter = 0;
 const container = document.getElementsByClassName("deck")[0];
 const moveCounter = document.getElementsByClassName('moves')[0];
 let items = container.children;
