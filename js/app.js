@@ -28,6 +28,7 @@ function shuffle(array) {
 
 function respondToClick(event) {
     openCard(event.target);
+    stars(starsList);
 }
 
 
@@ -91,8 +92,22 @@ function shuffleCards(shuffle) {
     }
 }
 
+function stars(stars) {
+    switch (true) {
+        case (counter > 27):
+            stars[0].style.display = 'none';
+            break;
+        case (counter > 18):
+            stars[1].style.display = 'none';
+            break;
+        case (counter > 12):
+            stars[2].style.display = 'none';
+            break;
+    }
+}
+
 function game() {
-    const resetButton = document.getElementsByClassName('restart')[0];
+    resetValues();
     container.addEventListener('click', respondToClick);
     resetButton.addEventListener('click', resetValues);
 }
@@ -104,6 +119,9 @@ function resetValues() {
     matchCards = [];
     counter = 0;
     moveCounter.innerText = counter;
+    for (star of starsList) {
+        star.style.display = '';
+    }
     for (item of items) {
         item.classList.remove('open', 'show', 'match');
     }
@@ -115,12 +133,13 @@ let matchCards = [];
 let counter = 0;
 const container = document.getElementsByClassName("deck")[0];
 const moveCounter = document.getElementsByClassName('moves')[0];
+const resetButton = document.getElementsByClassName('restart')[0];
+const starsList = document.getElementsByClassName("stars")[0].children;
 let items = container.children;
 let cardClasses = ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf', 'bicycle', 'bomb'];
 let shuffleCardClasses = [];
 // let shuffleCardClasses = shuffle(cardClasses.concat(cardClasses));
 
-resetValues();
 game();
 
 /*
