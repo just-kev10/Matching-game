@@ -92,17 +92,46 @@ function shuffleCards(shuffle) {
     }
 }
 
-function stars(stars) {
+function stars(lStars) {
+    const fStar = lStars[2].firstElementChild.style;
+    const sStar = lStars[1].firstElementChild.style;
+    const tStar = lStars[0].firstElementChild.style;
+
     switch (true) {
-        case (counter > 27):
-            stars[0].style.display = 'none';
+        case (counter > 32):
+            tStar.display = 'none';
+            break;
+        case (counter > 29):
+            tStar.overflow = 'hidden';
+            tStar.width = '33%';
+            break;
+        case (counter > 26):
+            tStar.overflow = 'hidden';
+            tStar.width = '67%';
+            break;
+        case (counter > 24):
+            sStar.display = 'none';
+            break;
+        case (counter > 21):
+            sStar.overflow = 'hidden';
+            sStar.width = '33%';
             break;
         case (counter > 18):
-            stars[1].style.display = 'none';
+            sStar.overflow = 'hidden';
+            sStar.width = '67%';
             break;
-        case (counter > 12):
-            stars[2].style.display = 'none';
+        case (counter > 16):
+            fStar.display = 'none';
             break;
+        case (counter > 13):
+            fStar.overflow = 'hidden';
+            fStar.width = '33%';
+            break;
+        case (counter > 10):
+            fStar.overflow = 'hidden';
+            fStar.width = '67%';
+            break;
+
     }
 }
 
