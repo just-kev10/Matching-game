@@ -80,11 +80,13 @@ function noCardsMatch() {
 function inMoveCounter() {
     counter += 1;
     moveCounter.innerText = counter;
+    finalScore[4] = counter;
     winGame();
 }
 
 function winGame() {
     if (matchCards.length == 16) {
+        clearInterval(intervalId);
         setTimeout(function () {
             alert("You won the game.");
         }, 1000);
@@ -105,50 +107,67 @@ function shuffleCards(shuffle) {
 function stars(lStars) {
     /* stars function takes the move counter and depending
     on the moves the stars will disappear*/
-    const fStar = lStars[2].firstElementChild.style;
-    const sStar = lStars[1].firstElementChild.style;
-    const tStar = lStars[0].firstElementChild.style;
+    const fStar = lStars[2].firstElementChild;
+    const sStar = lStars[1].firstElementChild;
+    const tStar = lStars[0].firstElementChild;
+    let nstar = 0;
 
     switch (true) {
         case (counter > 32):
-            tStar.display = 'none';
+            tStar.style.display = 'none';
+            nstar = 0;
             break;
         case (counter > 29):
-            tStar.overflow = 'hidden';
-            tStar.width = '33%';
+            tStar.style.overflow = 'hidden';
+            tStar.style.width = '33%';
+            nstar = 0.33;
             break;
         case (counter > 26):
-            tStar.overflow = 'hidden';
-            tStar.width = '67%';
+            tStar.style.overflow = 'hidden';
+            tStar.style.width = '67%';
+            nstar = 0.67;
             break;
         case (counter > 24):
-            sStar.display = 'none';
+            sStar.style.display = 'none';
+            nstar = 1;
             break;
         case (counter > 21):
-            sStar.overflow = 'hidden';
-            sStar.width = '33%';
+            sStar.style.overflow = 'hidden';
+            sStar.style.width = '33%';
+            nstar = 1.33;
             break;
         case (counter > 18):
-            sStar.overflow = 'hidden';
-            sStar.width = '67%';
+            sStar.style.overflow = 'hidden';
+            sStar.style.width = '67%';
+            nstar = 1.67;
             break;
         case (counter > 16):
-            fStar.display = 'none';
+            fStar.style.display = 'none';
+            nstar = 2;
             break;
         case (counter > 13):
-            fStar.overflow = 'hidden';
-            fStar.width = '33%';
+            fStar.style.overflow = 'hidden';
+            fStar.style.width = '33%';
+            nstar = 2.33;
             break;
         case (counter > 10):
-            fStar.overflow = 'hidden';
-            fStar.width = '67%';
+            fStar.style.overflow = 'hidden';
+            fStar.style.width = '67%';
+            nstar = 2.67;
             break;
-
+        default:
+            nstar = 3;
+            fStar.style = '';
+            sStar.style = '';
+            tStar.style = '';
     }
+    finalScore[3] = nstar;
 }
 
 
 function resetValues() {
+    // time interval por timing refresh
+    intervalId = setInterval(timing, 1000);
     /*After the start of the game or when the user press the re-start button
     it reset all variables.*/
     shuffleCardClasses = shuffle(cardClasses.concat(cardClasses));
@@ -156,7 +175,9 @@ function resetValues() {
     openCards = [];
     matchCards = [];
     counter = 0;
+    stars(starsList);
     time = [];
+    finalScore = [];
     moveCounter.innerText = counter;
     for (star of starsList) {
         star.style.display = '';
@@ -164,7 +185,6 @@ function resetValues() {
     for (item of items) {
         item.classList.remove('open', 'show', 'match');
     }
-
 }
 function timing() {
     // time variables and time remainders;
@@ -194,6 +214,9 @@ function timing() {
     hrd.innerText = `${hours}`;
     md.innerText = `${minutes}`;
     sd.innerText = `${seconds}`;
+    finalScore[0] = hours;
+    finalScore[1] = minutes;
+    finalScore[2] = seconds;
 
     if (hours == 0) {
         hrd.parentElement.style.display = 'none';
@@ -210,8 +233,6 @@ function timing() {
 }
 
 function game() {
-    // time interval por timing refresh
-    setInterval(timing, 1000);
     resetValues();
     container.addEventListener('click', respondToClick);
     resetButton.addEventListener('click', resetValues);
@@ -221,6 +242,8 @@ function game() {
 let openCards = [];
 let matchCards = [];
 let counter = 0;
+let intervalId = 0;
+let finalScore = [];
 let time = [];
 const container = document.getElementsByClassName("deck")[0];
 const moveCounter = document.getElementsByClassName('moves')[0];
