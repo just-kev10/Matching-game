@@ -27,17 +27,22 @@ function shuffle(array) {
 }
 
 function respondToClick(event) {
+    /* After a click is perform the takes the event.target to open the card.*/
     openCard(event.target);
-    stars(starsList);
 }
 
 
 function openCard(eTarget) {
+    /* The cards are compare if the cards is not in a array matchCards*/
     if (openCards.length < 2 && !openCards.includes(eTarget) && !matchCards.includes(eTarget)) {
         if (eTarget.tagName == 'LI') {
             eTarget.classList.add("open");
             eTarget.classList.add("show");
             openCards.push(eTarget);
+            // time is register after the first card is shown.
+            if (time.length == 1) {
+                time[1] = new Date().getTime();
+            }
         }
         compareCards();
     }
@@ -51,6 +56,7 @@ function compareCards() {
 }
 
 function cardsMatch(first, second) {
+    /*cardsMatch adds the class match to the cards.*/
     if (first.firstElementChild.classList[1] == second.firstElementChild.classList[1]) {
         matchCards.push(first, second);
         first.classList.add("match");
@@ -60,6 +66,7 @@ function cardsMatch(first, second) {
 }
 
 function noCardsMatch() {
+    /*noCardsMatch function remove the classes that makes them to be shown*/
     setTimeout(function () {
         for (open of openCards) {
             open.classList.remove('open', 'show')
@@ -67,6 +74,7 @@ function noCardsMatch() {
         openCards = [];
     }, 1000);
     inMoveCounter();
+    stars(starsList);
 }
 
 function inMoveCounter() {
@@ -85,6 +93,8 @@ function winGame() {
 }
 
 function shuffleCards(shuffle) {
+    /* ShuffleCards functions takes an array that has 16 ramdomly cards
+    and then it iterates to each card to change the html.*/
     let index = 0;
     for (item of items) {
         item.children[0].className = `fa fa-${shuffle[index]}`;
@@ -93,6 +103,8 @@ function shuffleCards(shuffle) {
 }
 
 function stars(lStars) {
+    /* stars function takes the move counter and depending
+    on the moves the stars will disappear*/
     const fStar = lStars[2].firstElementChild.style;
     const sStar = lStars[1].firstElementChild.style;
     const tStar = lStars[0].firstElementChild.style;
@@ -135,18 +147,16 @@ function stars(lStars) {
     }
 }
 
-function game() {
-    resetValues();
-    container.addEventListener('click', respondToClick);
-    resetButton.addEventListener('click', resetValues);
-}
 
 function resetValues() {
+    /*After the start of the game or when the user press the re-start button
+    it reset all variables.*/
     shuffleCardClasses = shuffle(cardClasses.concat(cardClasses));
     shuffleCards(shuffleCardClasses);
     openCards = [];
     matchCards = [];
     counter = 0;
+    time = [];
     moveCounter.innerText = counter;
     for (star of starsList) {
         star.style.display = '';
@@ -156,10 +166,62 @@ function resetValues() {
     }
 
 }
+function timing() {
+    // time variables and time remainders;
+    let total = 0;
+    let seconds = 0;
+    let minutes = 0;
+    let mr = 0;
+    let hours = 0;
+    let hr = 0
+    let hrd = document.getElementsByClassName('time_hr')[0];
+    let md = document.getElementsByClassName('time_min')[0];
+    let sd = document.getElementsByClassName('time_sec')[0];
+
+    time[0] = new Date().getTime();
+    if (time.length > 1) {
+        // ms to hr with getTime
+        time[2] = (time[0] - time[1]);
+        total = time[2] / (1000 * 60 * 60);
+        /* the integer of each time value is displayed and the 
+           and the remainder is used to calculate the next time variable.*/
+        hours = Math.floor(total);
+        hr = total - hours;
+        minutes = Math.floor(hr * 60);
+        mr = (hr * 60) - Math.floor(hr * 60);
+        seconds = Math.floor(mr * 60);
+    }
+    hrd.innerText = `${hours}`;
+    md.innerText = `${minutes}`;
+    sd.innerText = `${seconds}`;
+
+    if (hours == 0) {
+        hrd.parentElement.style.display = 'none';
+    } else {
+        hrd.parentElement.style.display = '';
+    }
+    if (minutes == 0) {
+        md.parentElement.style.display = 'none';
+    } else {
+        md.parentElement.style.display = '';
+    }
+    // console.log(hours, minutes, seconds);
+
+}
+
+function game() {
+    // time interval por timing refresh
+    setInterval(timing, 1000);
+    resetValues();
+    container.addEventListener('click', respondToClick);
+    resetButton.addEventListener('click', resetValues);
+}
+// game variables:
 
 let openCards = [];
 let matchCards = [];
 let counter = 0;
+let time = [];
 const container = document.getElementsByClassName("deck")[0];
 const moveCounter = document.getElementsByClassName('moves')[0];
 const resetButton = document.getElementsByClassName('restart')[0];
@@ -167,7 +229,6 @@ const starsList = document.getElementsByClassName("stars")[0].children;
 let items = container.children;
 let cardClasses = ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf', 'bicycle', 'bomb'];
 let shuffleCardClasses = [];
-// let shuffleCardClasses = shuffle(cardClasses.concat(cardClasses));
 
 game();
 

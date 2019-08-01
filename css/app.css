@@ -17,7 +17,8 @@ body {
 }
 
 body {
-    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    background: #ffffff url('../img/geometry2.png');
+    /* Background pattern from Subtle Patterns */
     font-family: 'Coda', cursive;
 }
 
@@ -87,7 +88,7 @@ h1 {
 
 .score-panel {
     text-align: left;
-    width: 345px;
+    width: 355px;
     margin-bottom: 10px;
 }
 
@@ -104,6 +105,31 @@ h1 {
 }
 
 .score-panel .restart {
-    float: right;
+    display: inline-block;
+    /* float: right; */
     cursor: pointer;
+}
+
+.time {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.list {
+    margin-left: -30px;
+}
+
+.time_li {
+    list-style-type: none;
+    display: inline-block;
+}
+
+.restart {
+    margin-left: 20px;
+}
+
+.time_hr,
+.time_min,
+.time_sec {
+    font-style: normal;
 }
