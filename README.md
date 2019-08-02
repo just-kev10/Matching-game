@@ -1,20 +1,26 @@
-# Memory Game Project
+# Memory Game
 
 ## Table of Contents
 
+* [Description](#Description)
 * [Instructions](#instructions)
 * [Contributing](#contributing)
 
+## Description
+The matching game randomly shuffles cards. A user wins once all cards have successfully been matched.  
+
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
-
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+1. Open the index.html file in your browser, start by clicking any card you want.  
+2. Every time two cards match they will be shown and keep visible.  
+3. You win the game once you match all the cards, 16 cards totally.  
+4. Your statistics will display once you win.  
+5. To restart the game you press the return arrow.  
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+Bug reports and pull requests are welcome on GitHub at https://github.com/just-kev10/Matching-game.
 
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+The main repository to this game is for Udacity students. Therefore, Udacity most likely will not accept pull requests.
+
+For details, check out CONTRIBUTING.md.
