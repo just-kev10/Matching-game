@@ -87,9 +87,7 @@ function inMoveCounter() {
 function winGame() {
     if (matchCards.length == 16) {
         clearInterval(intervalId);
-        setTimeout(function () {
-            alert("You won the game.");
-        }, 1000);
+        setTimeout(modal, 1000);
 
     }
 }
@@ -186,6 +184,50 @@ function resetValues() {
         item.classList.remove('open', 'show', 'match');
     }
 }
+
+function modal() {
+    // Get the modal
+    const modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    const btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    const span = document.getElementsByClassName("close")[0];
+    // inside tex in the modal
+    const movesS = document.getElementsByClassName("modaldetails")[0].children[0].children[0];
+    const starsS = document.getElementsByClassName("modaldetails")[0].children[1].children[0];
+    const timeS = document.getElementsByClassName("modaldetails")[0].children[2].children[0]
+
+    // When the user clicks the button, open the modal
+    //works when buttons is shown 
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    movesS.innerText = `${finalScore[4]}`;
+    starsS.innerText = `${finalScore[3]}`;
+    if (finalScore[0] == 0 && finalScore[1] == 0) {
+        timeS.innerText = `${finalScore[2]} secs`;
+    } else if (finalScore[0] == 0) {
+        timeS.innerText = `${finalScore[1]} mins ${finalScore[2]} secs`;
+    } else {
+        timeS.innerText = `${finalScore[1]} hrs ${finalScore[1]} mins ${finalScore[2]} secs`;
+    }
+    modal.style.display = "block";
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    // window.onclick = function (event) {
+    //     if (event.target == modal) {
+    //         modal.style.display = "none";
+    //     }
+    // }
+}
+
 function timing() {
     // time variables and time remainders;
     let total = 0;
@@ -229,7 +271,6 @@ function timing() {
         md.parentElement.style.display = '';
     }
     // console.log(hours, minutes, seconds);
-
 }
 
 function game() {
