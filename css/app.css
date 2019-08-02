@@ -88,8 +88,10 @@ h1 {
 
 .score-panel {
     text-align: left;
-    width: 355px;
+    width: 500px;
     margin-bottom: 10px;
+    padding-left: 100px;
+    padding-right: 0px;
 }
 
 .score-panel .stars {
@@ -125,7 +127,7 @@ h1 {
 }
 
 .restart {
-    margin-left: 20px;
+    margin-left: 60px;
 }
 
 .time_hr,
