@@ -27,7 +27,7 @@ function shuffle(array) {
 }
 
 function respondToClick(event) {
-    /* After a click is perform the takes the event.target to open the card.*/
+    /* After a click is perform it takes the event.target to open the card.*/
     openCard(event.target);
 }
 
@@ -61,6 +61,10 @@ function cardsMatch(first, second) {
         matchCards.push(first, second);
         first.classList.add("match");
         second.classList.add("match");
+    } else {
+        for (open of openCards) {
+            open.classList.add('nomatch');
+        }
     }
     noCardsMatch();
 }
@@ -69,7 +73,7 @@ function noCardsMatch() {
     /*noCardsMatch function remove the classes that makes them to be shown*/
     setTimeout(function () {
         for (open of openCards) {
-            open.classList.remove('open', 'show')
+            open.classList.remove('open', 'show', 'nomatch')
         }
         openCards = [];
     }, 1000);

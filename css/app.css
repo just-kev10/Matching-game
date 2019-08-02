@@ -72,6 +72,12 @@ h1 {
     cursor: default;
 }
 
+.deck .card.nomatch {
+    transform: rotateY(0);
+    background: #e40259;
+    cursor: default;
+}
+
 .deck .card.show {
     font-size: 33px;
 }
